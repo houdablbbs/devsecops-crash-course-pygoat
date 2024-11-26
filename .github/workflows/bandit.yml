@@ -1,11 +1,11 @@
 name: Python SAST with Bandit
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   bandit:
     runs-on: ubuntu-latest
-
+    
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
