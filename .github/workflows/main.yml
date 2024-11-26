@@ -1,1 +1,37 @@
+name: Bandit Security Analysis
 
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'  # Use your desired Python version
+
+    - name: Install Bandit
+      run: pip install bandit
+
+    - name: Run Bandit Security Scan (HTML and JSON)
+      run: |
+        mkdir -p bandit-reports
+        bandit -r . -f html -o bandit-reports/bandit-report.html || echo "Bandit HTML scan completed with findings."
+        bandit -r . -f json -o bandit-reports/bandit-report.json || echo "Bandit JSON scan completed with findings."
+
+    - name: Upload Bandit Reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: bandit-reports
+        path: bandit-reports/
