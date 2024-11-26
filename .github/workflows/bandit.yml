@@ -1,7 +1,7 @@
 name: Python SAST with Bandit
 
 on: [push, pull_request]
- 
+
 jobs:
   bandit:
     runs-on: ubuntu-latest
